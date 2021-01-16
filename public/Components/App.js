@@ -86,7 +86,6 @@ class App extends Component {
     const home = (
       <div className='container'>
         <Login />
-        <Link to="/game"><button>click me yo</button></Link>
         <div id='topbar' /><div id='bottombar' />
         <div id='splash' style={this.state.create || this.state.enterRoom ? {filter: `brightness(${'75%'})`} : {filter: `brightness(${'100%'})`}}>
           <h1 id='title'>FAKE FRIENDS</h1>

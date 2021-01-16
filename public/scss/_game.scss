@@ -1,0 +1,22 @@
+#usercontainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $medium-grey;
+    height: 100%;
+    width: 25%;
+}
+
+.user{
+    margin: 0;
+    background-color: $light-grey;
+    width: 75%;
+    padding: 32px;
+    border: 1px solid $dark-grey;
+    text-align: left;
+    padding: 32px;
+}

@@ -3,10 +3,8 @@ import React from 'react';
 const User = (props) => {
 
     return (
-        <div>
+        <div className='user'>
             {props.username}
-            <br/>
-            {props.id}
         </div>
     );
 

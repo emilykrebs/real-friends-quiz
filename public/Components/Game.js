@@ -13,20 +13,19 @@ class Game extends Component {
         socket = io.connect();
 
         socket.on('joinedroom', data =>{
-            let newUsers = [...this.state.users];
-            newUsers.push(data);
-            this.setState({...this.state, users: newUsers})
+            this.setState({...this.state, users: data})
         });
         
         this.state={socket, users: []};
     }
 
     gimmeID(){
+
         this.setState({socket});
 
         const data = {
             room: this.props.room,
-            name: 'Seymour Butts',
+            name: 'Seymour Butts'
         }
 
         socket.emit('joinroom', data);
