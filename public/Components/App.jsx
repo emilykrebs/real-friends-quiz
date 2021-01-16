@@ -55,12 +55,11 @@ class App extends Component {
   }
 
   enterRoomCode(event, room){
-    // call backend and validate the room code
     event.preventDefault();
-    if (room === '123') {
-      // reroute to the room page
-      console.log('success!!!!');
-    }
+
+    fetch(`/survey/${room}`)
+      .then(response=>response.json())
+      .then(data=>console.log(data));
   }
 
   exitRoomPrompt(){

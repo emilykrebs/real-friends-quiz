@@ -17,7 +17,6 @@ const MONGO_URI = 'mongodb+srv://mole:mole@friends-scratch-project.5ohhn.mongodb
 mongoose.connect( MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once("open", () => console.log("connected to database"));
 
-
 if (process.env.NODE_ENV === 'production') {
   // statically serve everything in the build folder on the route '/build'
   app.use('/build', express.static(path.join(__dirname, '../build')));
