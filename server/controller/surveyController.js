@@ -3,8 +3,9 @@ const Survey = require('../models/surveyModel');
 exports.createNewSurvey = (req, res, next) => {
   const newSurvey = req.body;
 
-  Survey.create({questions: newSurvey})
+  Survey.create({ questions: newSurvey })
   .then(data => {
+    console.log('SURVEY CREATE DATA----->',data)
     res.locals.roomId = data._id;
     next();
   })
