@@ -13,9 +13,6 @@ const MONGO_URI = 'mongodb+srv://mole:mole@friends-scratch-project.5ohhn.mongodb
 mongoose.connect( MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once("open", () => console.log("connected to database"));
 
-// set up route to survey router
-app.use('/survey', surveyRouter);
-
 
 if (process.env.NODE_ENV === 'production') {
   // statically serve everything in the build folder on the route '/build'
@@ -26,7 +23,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use((err, req, res, next)=>{
+// set up route to survey router
+app.use('/survey', surveyRouter);
+
+
+app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
