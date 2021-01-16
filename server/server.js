@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT;
 const mongoose = require('mongoose');
 
@@ -9,6 +10,7 @@ const userRouter = require('./routes/userRouter');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cookieParser());
 
 // establish connection with mongoDB --->
 const MONGO_URI = 'mongodb+srv://mole:mole@friends-scratch-project.5ohhn.mongodb.net/friends?retryWrites=true&w=majority';

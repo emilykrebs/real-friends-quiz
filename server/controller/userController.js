@@ -25,9 +25,8 @@ exports.verifyUser =(req, res, next)=>{
   const userLogin = req.body;
   User.findOne(userLogin)
   .then(data => {
-    if (data === null) return console.log('USER IS NULL!!!!!!!!')
-    // res.redirect('/user/register');
-    console.log('VERIFY USERDATA---->', data);
+    if (data === null) return res.redirect('/user/register');
+    console.log('VERIFY USER DATA---->', data);
     res.locals.userId = data._id;
     next();
   })
