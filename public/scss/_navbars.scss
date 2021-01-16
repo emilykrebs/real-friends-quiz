@@ -1,0 +1,19 @@
+#topbar {
+    overflow: hidden;
+    background-color: $blue-violet;
+    position: fixed;
+    padding: 16px;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+#bottombar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    padding: 12px;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}

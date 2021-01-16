@@ -1,35 +1,49 @@
 button{
     padding: 16px;
     border: none;
-    border-radius: 15px;
+    transform: rotate(random(2) + deg);
     background-color: $mango;
-    box-shadow: 2px 5px 5px rgba(0,0,0,.15);
-
+    box-shadow: 5px 8px rgba(0,0,0,1);
     outline: none;
+    user-select: none;
 
     transition: all .25s ease;
 
     &:hover{
         transform: scale(1.05);
+        transform: rotate(-5deg);
         outline: none;
     }
 
     &:active{
         transform: scale(.95);
-        background-color: $orange-pantone;
+        background-color: $winter-sky;
+        box-shadow: 2px 5px rgba(0,0,0,1);
         outline: none;
+    }
+
+    &:disabled{
+        background-color: $medium-grey;
+        transform: skew(0deg);
+        box-shadow: none;
     }
 }
 
-.buttons{
-    display: flex;
-    align-items: center;
-}
+.text{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    transform: skew(0);
 
-#startBtn{
-    background-color: $azure;
+    &:hover{
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
 
     &:active{
-        background-color: $blue-violet;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
     }
 }

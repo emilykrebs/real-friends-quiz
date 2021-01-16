@@ -6,8 +6,8 @@ const userSchema = new Schema ({
     password: {type: String, required: true},
     survey_ids: [{
       type: Schema.Types.ObjectId,
-      ref: 'survey',
+      ref: 'Survey',
     }]
   });
   
-  module.exports = mongoose.model('user', userSchema);
+  module.exports = mongoose.model('User', userSchema);

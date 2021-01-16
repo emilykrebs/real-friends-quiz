@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Menu from './Menu.js';
-import Question from './Question.js';
+import QuestionContainer from './QuestionContainer.js';
+import Login from './Login.js';
+import Enter from './Enter.js';
+
+const init = {create: false, enterRoom: false, questions: []};
 
 class App extends Component {
 
@@ -10,13 +14,15 @@ class App extends Component {
     this.createNewSurvey = this.createNewSurvey.bind(this);
     this.addQuestion = this.addQuestion.bind(this);
     this.sendSurvey = this.sendSurvey.bind(this);
+    this.exitSurvey = this.exitSurvey.bind(this);
+    
+    this.openRoomPrompt = this.openRoomPrompt.bind(this);
+    this.exitRoomPrompt = this.exitRoomPrompt.bind(this);
+    this.enterRoomCode = this.enterRoomCode.bind(this);
 
     this.question = React.createRef();
 
-    this.state = {
-      create: false,
-      questions: []
-    };
+    this.state = init;
   }
 
   createNewSurvey(){
@@ -30,27 +36,53 @@ class App extends Component {
     this.setState({...this.state, questions: questionArr});
   }
 
-  sendSurvey(){
+  sendSurvey(event){
+    event.preventDefault();
+    const body = this.state.questions;
 
-    const body = this.state;
-
-    fetch(``, {method: 'POST', headers: {'Content-Type': 'Application/JSON'}, body: JSON.stringify(body)})
+    fetch(`/survey/addsurvey`, {method: 'POST', headers: {'Content-Type': 'Application/JSON'}, body: JSON.stringify(body)})
+      .then(res=>res.json())
+      .then(data=>this.question.current.showResults(data))
       .catch(err => console.log(`Error sending survey to db: ${err}`));
-    this.setState({...state, create: false});
+  }
+
+  exitSurvey(){
+    this.setState(init);
+  }
+
+  openRoomPrompt(){
+    this.setState({...this.state, enterRoom: true});
+  }
+
+  enterRoomCode(event, room){
+    event.preventDefault();
+
+    fetch(`/survey/${room}`)
+      .then(response=>response.json())
+      .then(data=>console.log(data));
+  }
+
+  exitRoomPrompt(){
+    this.setState({...this.state, enterRoom: false});
   }
 
   render() {
 
-    const blurAmount = this.state.create ? 5 : 0;
-    const questions = this.state.create ? <Question ref={this.question} clickEvent={this.addQuestion} submit={this.sendSurvey} number={this.state.questions.length} /> : <div></div>;
+    const questions = this.state.create ? <QuestionContainer ref={this.question} clickEvent={this.addQuestion} submit={this.sendSurvey} exit={this.exitSurvey} number={this.state.questions.length} questions={this.state.questions} /> : <div></div>;
+    const enter = this.state.enterRoom ? <Enter submit={this.enterRoomCode} exit={this.exitRoomPrompt} /> : <div></div>;
 
     return (
       <div className='container'>
-        <div style={{filter: `blur(${blurAmount}px)`}}>
-          <h1 style={{fontSize:'72px', textAlign: 'center'}}>FAKE FRIENDS</h1>
-          <div className='buttons'><Menu clickEvent={this.createNewSurvey} blurred={this.state.create} /></div>
+        <Login />
+        <div id='topbar' /><div id='bottombar' />
+        <div id='splash' style={this.state.create || this.state.enterRoom ? {filter: `brightness(${'75%'})`} : {filter: `brightness(${'100%'})`}}>
+          <h1 id='title'>FAKE FRIENDS</h1>
+          <h1 id='tagline'>"NOBODY LIKES YOU!"</h1>
+          <h3>Choose your game-mode:</h3>
+          <Menu newSurvey={this.createNewSurvey} enterRoom={this.openRoomPrompt} blurred={this.state.create} />
         </div>
         {questions}
+        {enter}
       </div>
     );
   }

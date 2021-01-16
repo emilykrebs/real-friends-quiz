@@ -7,6 +7,11 @@ const surveySchema = new Schema({
     question: String,
     answer: Boolean,
   }],
+  user_id: { 
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    // required: true,
+  },
 });
 
 // creates a model for the 'survey' collection that will be part of the export

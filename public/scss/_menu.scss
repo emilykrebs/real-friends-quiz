@@ -1,0 +1,35 @@
+#menubuttoncontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    button{
+        margin: 8px 32px;
+    }
+}
+
+#create{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#play{
+    margin: 32px;
+    border-left:5px solid $medium-grey;
+}
+
+#createBtn{
+    width: 100%;
+}
+
+#startBtn{
+    background-color: $azure;
+    width: 100%;
+
+    &:active{
+        background-color: $winter-sky;
+    }
+}

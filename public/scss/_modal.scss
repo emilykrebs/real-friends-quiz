@@ -1,0 +1,67 @@
+.modal{
+    position: fixed;
+    border-radius: 15px;
+    background-color: $off-white;
+    box-shadow: 8px 8px rgba(0, 0, 0, 1);
+    z-index: 50;
+    animation: slideInFromLeft .5s ease-in-out;
+
+    form{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 16px 64px;
+    }
+
+    input{
+        padding: 16px 32px;
+    }
+
+    h4{
+        margin: 0;
+    }
+
+    a{
+        user-select: none;
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-300%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+}
+
+.header{
+    overflow: hidden;
+    background-color: $winter-sky;
+    top: 0;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+#exitBtn{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    transform: skew(0);
+    border-radius: 50%;
+
+    font-family: 'Lato', sans-serif;
+
+    &:active{
+        background-color: $orange-pantone;
+    }
+}
