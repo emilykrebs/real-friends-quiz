@@ -9,7 +9,7 @@ exports.isLoggedIn = (req, res, next) => {
   console.log(ssid)
 
   Session.findOne({cookieId: ssid})
-  .then(data => {
+   .then(data => {
     console.log('COOKIE FOUND----->', data);
     // check if null is returned -> if so, redirect to login
     // otherwise, next;
