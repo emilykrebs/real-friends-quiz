@@ -10,6 +10,10 @@ router.post('/register', userController.postLogin, (req, res) => {
     res.status(200).send('REGISTER WORKED');
 })
 
+router.get('/verify', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).json(res.locals.verify);
+})
+
 // login
 router.post('/login', 
   userController.verifyUser,

@@ -55,12 +55,11 @@ class App extends Component {
   }
 
   enterRoomCode(event, room){
-    // call backend and validate the room code
     event.preventDefault();
-    if (room === '123') {
-      // reroute to the room page
-      console.log('success!!!!');
-    }
+
+    fetch(`/survey/${room}`)
+      .then(response=>response.json())
+      .then(data=>console.log(data));
   }
 
   exitRoomPrompt(){
@@ -76,10 +75,11 @@ class App extends Component {
       <div className='container'>
         <Login />
         <div id='topbar' /><div id='bottombar' />
-        <div id='splash' style={this.state.create || this.state.enterRoom ? {filter: `brightness(${'75%'})`} : {}}>
+        <div id='splash' style={this.state.create || this.state.enterRoom ? {filter: `brightness(${'75%'})`} : {filter: `brightness(${'100%'})`}}>
           <h1 id='title'>FAKE FRIENDS</h1>
+          <h1 id='tagline'>"NOBODY LIKES YOU!"</h1>
           <h3>Choose your game-mode:</h3>
-          <div><Menu newSurvey={this.createNewSurvey} enterRoom={this.openRoomPrompt} blurred={this.state.create} /></div>
+          <Menu newSurvey={this.createNewSurvey} enterRoom={this.openRoomPrompt} blurred={this.state.create} />
         </div>
         {questions}
         {enter}

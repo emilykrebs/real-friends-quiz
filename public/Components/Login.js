@@ -51,7 +51,9 @@ class Login extends Component {
 
     componentDidMount(){
         document.getElementById('splash').style.filter = `brightness(${'75%'})`;
-        // return this.setState({...this.state, loggedIn: true});
+        fetch('/user/verify')
+            .then(response=>response.json())
+            .then(data=>this.setState({...this.state, loggedIn: data}));
     }
 
     render(){
