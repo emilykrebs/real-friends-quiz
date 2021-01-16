@@ -31,15 +31,14 @@ class App extends Component {
     this.setState({...this.state, questions: questionArr});
   }
 
-  sendSurvey(){
+  sendSurvey(event){
+    event.preventDefault();
     const body = this.state.questions;
 
     fetch(`/survey/addsurvey`, {method: 'POST', headers: {'Content-Type': 'Application/JSON'}, body: JSON.stringify(body)})
       .then(res=>res.json())
-      .then(data=>console.log(data))
+      .then(data=>this.question.current.showResults(data))
       .catch(err => console.log(`Error sending survey to db: ${err}`));
-
-    this.question.current.showResults();
   }
 
   exitSurvey(){

@@ -8,7 +8,7 @@ class Login extends Component {
 
     render(){
 
-        const modal = this.state.loggedIn ? {} : {};
+        const modal = this.state.loggedIn ? <div>LOGIN FORM GOES HERE</div> : <div></div>;
 
         return (
             <div>

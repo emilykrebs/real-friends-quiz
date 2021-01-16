@@ -29,8 +29,8 @@ class QuestionContainer extends Component{
         return this.state;
     }
 
-    showResults(){
-        this.setState({...this.state, submit: true});
+    showResults(key){
+        this.setState({...this.state, submit: true, room: key});
     }
 
     render(){
@@ -75,7 +75,7 @@ class QuestionContainer extends Component{
             <div>
                 <div className='header'>Congratulations!</div>
                 <form>
-                    <input type='text' placeholder='roomkeyhere###' value='hi' />
+                    <input type='text' placeholder='roomkeyhere###' value={this.state.room} />
                 </form>
             </div>
         );
