@@ -39,7 +39,7 @@ body{
 }
 
 #splash{
-    margin-bottom: 40%;
+    margin-bottom: 35%;
 }
 
 #title{
@@ -49,6 +49,30 @@ body{
     transform: rotate(-2deg);
     background-color: $winter-sky;
     box-shadow: 24px 24px black;
+}
+
+#tagline{
+    position: fixed;
+    top: 120px;
+    right: 0;
+    font-size: 36px;
+    font-weight: 300;
+    text-align: center;
+    padding: 0px 16px;
+    transform: rotate(3deg);
+    background-color: $orange-pantone;
+    box-shadow: 12px 12px black;
+    z-index: 10;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: $winter-sky;
+    border-radius: 50px;
+    padding: 5px;
 }
 
 @media only screen and (max-width: 800px) {

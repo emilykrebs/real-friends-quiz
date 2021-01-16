@@ -78,6 +78,7 @@ class App extends Component {
         <div id='topbar' /><div id='bottombar' />
         <div id='splash' style={this.state.create || this.state.enterRoom ? {filter: `brightness(${'75%'})`} : {}}>
           <h1 id='title'>FAKE FRIENDS</h1>
+          <h1 id='tagline'>"INSERT WITTY TAG HERE"</h1>
           <h3>Choose your game-mode:</h3>
           <div><Menu newSurvey={this.createNewSurvey} enterRoom={this.openRoomPrompt} blurred={this.state.create} /></div>
         </div>
