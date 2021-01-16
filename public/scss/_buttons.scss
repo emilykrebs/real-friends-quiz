@@ -1,0 +1,35 @@
+button{
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    background-color: $mango;
+    box-shadow: 2px 5px 5px rgba(0,0,0,.15);
+
+    outline: none;
+
+    transition: all .25s ease;
+
+    &:hover{
+        transform: scale(1.05);
+        outline: none;
+    }
+
+    &:active{
+        transform: scale(.95);
+        background-color: $orange-pantone;
+        outline: none;
+    }
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+}
+
+#startBtn{
+    background-color: $azure;
+
+    &:active{
+        background-color: $blue-violet;
+    }
+}
