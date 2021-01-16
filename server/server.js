@@ -34,7 +34,7 @@ app.use('/user', userRouter);
 
 // general 404 handler for any other endpoints --->
 app.use('*', (req, res) => {
-  res.status(404).send('Not Found');
+  res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
 // global error handler --->
@@ -49,4 +49,15 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT || 3000);
+/* .............................. SOCKET.IO ..............................  */
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+http.listen(PORT || 3000, ()=>{
+  console.log('connected to port 3000');
+});
+
+io.on('connection', (socket) => {
+  console.log(`a user connected with id ${socket.id}`);
+});

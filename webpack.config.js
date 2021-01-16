@@ -13,6 +13,11 @@ module.exports = {
     proxy: {
       '/survey/*': 'http://localhost:3000',
       '/user/*': 'http://localhost:3000',
+      '/game': 'http://localhost:3000',
+      '/socket.io': {
+        target: 'http://localhost:3000',
+        ws: true
+      }
     }
   },
   module: {
