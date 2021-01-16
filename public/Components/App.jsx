@@ -53,8 +53,9 @@ class App extends Component {
       <div className='container'>
         <Login />
         <div id='topbar' /><div id='bottombar' />
-        <div id='splash' style={this.state.create ? {filter: `blur(${2}px) brightness(${'75%'})`} : {}}>
+        <div id='splash' style={this.state.create ? {filter: `brightness(${'75%'})`} : {}}>
           <h1 id='title'>FAKE FRIENDS</h1>
+          <h3>Choose your game-mode:</h3>
           <div><Menu clickEvent={this.createNewSurvey} blurred={this.state.create} /></div>
         </div>
         {questions}

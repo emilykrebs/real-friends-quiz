@@ -4,8 +4,13 @@ const Menu = (props) => {
     
     return(
         <div id='menubuttoncontainer'>
-            <button id='createBtn' onClick={props.clickEvent} >Create New Survey</button>
-            <button id='startBtn'>Enter Room Code</button>
+            <div id='create'>
+                <button id='createBtn' onClick={props.clickEvent} >Create New Survey</button>
+                <button id='createBtn' >My Surveys</button>
+            </div>
+            <div id='play'>
+                <button id='startBtn'>Enter Room Code</button>
+            </div>
         </div>
     );
 }

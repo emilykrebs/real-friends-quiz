@@ -3,7 +3,7 @@ button{
     border: none;
     transform: rotate(random(2) + deg);
     background-color: $mango;
-    box-shadow: 2px 5px rgba(0,0,0,1);
+    box-shadow: 5px 8px rgba(0,0,0,1);
     outline: none;
     user-select: none;
 
@@ -18,12 +18,32 @@ button{
     &:active{
         transform: scale(.95);
         background-color: $winter-sky;
+        box-shadow: 2px 5px rgba(0,0,0,1);
         outline: none;
     }
 
     &:disabled{
         background-color: $medium-grey;
         transform: skew(0deg);
+        box-shadow: none;
+    }
+}
+
+.text{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    transform: skew(0);
+
+    &:hover{
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    &:active{
+        background-color: transparent;
+        border: none;
         box-shadow: none;
     }
 }

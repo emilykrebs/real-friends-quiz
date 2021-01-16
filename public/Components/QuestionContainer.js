@@ -84,7 +84,7 @@ class QuestionContainer extends Component{
         const modal = this.state.submit ? resultForm : prompt;
 
         return (
-            <div className='questionForm'>
+            <div className='modal'>
                 <button id='exitBtn' onClick={this.props.exit}>x</button>
                 {modal}
             </div>
