@@ -35,8 +35,8 @@ class Login extends Component {
         event.preventDefault();
         
         const body = {username: this.state.username, password: this.state.password};
-        fetch(`/users/register`, { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
-            .then(res => {if (res.status === 200) this.this.setState({...this.state, loggedIn: true})})
+        fetch(`/user/register`, { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
+            .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
             .catch(err => console.log(`Error signing up: ${err}`));   
     }
 
@@ -45,12 +45,13 @@ class Login extends Component {
 
         const body = {username: this.state.username, password: this.state.password};
         fetch('/user/login', { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
-            .then(res => {if (res.status === 200) this.this.setState({...this.state, loggedIn: true})})
+            .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
             .catch(err => console.log(`Error logging in: ${err}`));   
     }
 
     componentDidMount(){
-        return this.setState({...this.state, loggedIn: true});
+        document.getElementById('splash').style.filter = `brightness(${'75%'})`;
+        // return this.setState({...this.state, loggedIn: true});
     }
 
     render(){
@@ -70,25 +71,9 @@ class Login extends Component {
                 </form>
             </div>
             );
-
-        // const signup = (
-        //     <div>
-        //         <div className='header'>Login</div>
-        //         <form>
-        //             <h4>Username</h4>
-        //             <input id='loginformText' type='text' placeholder='Bob Roberts' value={this.state.username} onChange={this.handleUsernameChange} required />
-        //             <br/>
-        //             <h4>Password</h4>
-        //             <input id='loginformText' type='password' placeholder='*****' value={this.state.password} onChange={this.handlePasswordChange} required />
-        //             <br/>
-        //             <button disabled={this.state.username.length < 1 || this.state.password.length < 1} onClick={this.state.}>Sign Up</button>
-        //             <a onClick={this.toggleSignup}>Login</a>
-        //         </form>
-        //     </div>
-        // );
         
         const defaultModal = <div></div>;
-        const modal = this.state.loggedIn ? defaultModal : login;
+        const modal = this.state.loggedIn ? (document.getElementById('splash').style.filter = `brightness(${'100%'})`, defaultModal) : login;
 
         return (
             <div className='modal'>
