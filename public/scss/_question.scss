@@ -1,0 +1,61 @@
+.header{
+    overflow: hidden;
+    background-color: $winter-sky;
+    top: 0;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+#exitBtn{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    height: 25px;
+    width: 25px;
+    transform: skew(0);
+    border-radius: 50%;
+
+    font-family: 'Lato', sans-serif;
+
+    &:active{
+        background-color: $orange-pantone;
+    }
+}
+
+#qformText{
+    top: 0;
+    margin: 0px;
+    font-family: 'Lato', sans-serif;
+}
+
+
+.qformButton{
+    margin: 0px 8px;
+    padding: 8px 32px;
+}
+
+#qformReview{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    float: left;
+    text-align: left;
+    margin: 16px;
+    color: $dark-grey;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: $winter-sky;
+    border-radius: 50px;
+    padding: 5px;
+}
