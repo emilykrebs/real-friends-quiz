@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "SET NODE_ENV=production node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mac": "NODE_ENV=development nodemon server/server.js & webpack serve --open",
+    "mac": "SET NODE_ENV=development nodemon server/server.js & webpack serve --open",
     "windows": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"nodemon server/server.js\"",
     "build-windows": "cross-env NODE_ENV=production webpack",
     "build-mac": "NODE_ENV=production webpack"
