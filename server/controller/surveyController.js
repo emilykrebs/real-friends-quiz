@@ -5,7 +5,7 @@ exports.createNewSurvey = (req, res, next) => {
 
   Survey.create({questions: newSurvey})
   .then(data => {
-    console.log('MADE IT----->', data)
+    res.locals.roomId = data._id;
     next();
   })
   .catch(err => {
