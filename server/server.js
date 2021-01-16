@@ -58,6 +58,18 @@ http.listen(PORT || 3000, ()=>{
   console.log('connected to port 3000');
 });
 
+const Player = require('./Player.js');
+
 io.on('connection', (socket) => {
+
   console.log(`a user connected with id ${socket.id}`);
+
+  socket.on('joinroom', data => {
+
+    const newPlayer = new Player(data.name, socket.id);
+    socket.join(data.room);
+    console.log(socket.rooms);
+    io.sockets.to(data.room).emit('joinedroom', newPlayer);
+  });
+
 });

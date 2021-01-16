@@ -13,8 +13,6 @@ import Game from './Game.js';
 
 const init = {create: false, enterRoom: false, questions: []};
 
-let socket;
-
 class App extends Component {
 
   constructor(props){
