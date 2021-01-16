@@ -3,6 +3,9 @@ const Survey = require('../models/surveyModel');
 exports.createNewSurvey = (req, res, next) => {
   const newSurvey = req.body;
 
+  //console.log('COOKIE---->', res.get('Set-Cookie'));
+  console.log('COOKIE---->', req.cookie);
+
   Survey.create({ questions: newSurvey })
   .then(data => {
     console.log('SURVEY CREATE DATA----->',data)

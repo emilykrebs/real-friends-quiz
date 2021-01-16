@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('../controller/userController')
+const userController = require('../controller/userController');
+const cookieController = require('../controller/cookieController');
+const sessionController = require('../controller/sessionController');
 
 // sign up
 router.post('/register', userController.postLogin, (req, res) => {
@@ -9,7 +11,11 @@ router.post('/register', userController.postLogin, (req, res) => {
 })
 
 // login
-router.post('/login', userController.verifyUser, (req, res) => {
+router.post('/login', 
+  userController.verifyUser,
+  sessionController.startSession,  
+  cookieController.setSSIDCookie, 
+  (req, res) => {
   res.status(200).json(res.locals.userId);
 });
 
