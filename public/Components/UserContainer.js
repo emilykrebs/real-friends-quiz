@@ -11,6 +11,7 @@ const UserContainer = (props) => {
         
         return(
             <div id='usercontainer'>
+                <div className='gameheader'>Users<br/><sup>Room #{props.room}</sup></div>
                 {users}
             </div>
         );

@@ -74,7 +74,6 @@ io.on('connection', (socket) => {
 
     if (rooms.some(room => room.key === data.room)){
       target = rooms.filter(room => room.key === data.room)[0];
-      console.log(target);
       target.users.push(newPlayer);
     } else {
       target = new Room(data.room, [newPlayer]);

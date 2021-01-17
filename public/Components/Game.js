@@ -8,18 +8,28 @@ class Game extends Component {
     constructor(props){
         super(props);
 
-        this.gimmeID = this.gimmeID.bind(this);
+        this.collapseUsers = this.collapseUsers.bind(this);
 
         socket = io.connect();
-
         socket.on('joinedroom', data =>{
             this.setState({...this.state, users: data})
         });
         
-        this.state={socket, users: []};
+        this.state={socket, users: [], showUsers: true};
     }
 
-    gimmeID(){
+    collapseUsers(){
+        this.setState({...this.state, showUsers: !this.state.showUsers});
+    }
+
+    componentDidMount(){
+
+        if(!this.props.room)
+            this.props.exitGame();
+
+        const root = document.getElementById('root');
+        root.style.width = '100%';
+        root.style.backgroundColor = 'black';
 
         this.setState({socket});
 
@@ -32,10 +42,14 @@ class Game extends Component {
     }
 
     render(){
+
+        const users = this.state.showUsers ? <UserContainer users={this.state.users} room={this.props.room} /> : <div></div>;
+
         return(
             <div>
-                <button onClick={this.gimmeID}>CLICK MEEEEEAHHHHHHH</button><br/>
-                <UserContainer users={this.state.users}/>
+                <button id='collapsebtn' onClick={this.collapseUsers} style={this.state.showUsers ? {marginLeft: '18%'} : {marginLeft: '0%'} } >{this.state.showUsers ? '<' : '>'}</button>
+                <button id='leavegamebtn' onClick={this.props.exitGame} >Leave Game</button>
+                {users}
             </div>
         )
     }

@@ -37,7 +37,9 @@ class Login extends Component {
         const body = {username: this.state.username, password: this.state.password};
         fetch(`/user/register`, { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
             .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
-            .catch(err => console.log(`Error signing up: ${err}`));   
+            .catch(err => console.log(`Error signing up: ${err}`));
+
+        document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
     }
 
     submitLogin(event){
@@ -47,13 +49,21 @@ class Login extends Component {
         fetch('/user/login', { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
             .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
             .catch(err => console.log(`Error logging in: ${err}`));   
+
+        document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
     }
 
     componentDidMount(){
-        document.getElementById('splash').style.filter = `brightness(${'75%'})`;
+        document.getElementById('root').style.width = '50%';
+        document.getElementById('root').style.backgroundColor = 'white';
+        document.getElementById('splash').style.filter = `brightness(${'75%'}) blur(2px)`;
         fetch('/user/verify')
             .then(response=>response.json())
-            .then(data=>this.setState({...this.state, loggedIn: data}));
+            .then(data=>{
+                this.setState({...this.state, loggedIn: data})
+                if (data)
+                    document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
+            });
     }
 
     render(){
@@ -75,7 +85,7 @@ class Login extends Component {
             );
         
         const defaultModal = <div></div>;
-        const modal = this.state.loggedIn ? (document.getElementById('splash').style.filter = `brightness(${'100%'})`, defaultModal) : login;
+        const modal = this.state.loggedIn ? defaultModal : login;
 
         return (
             <div className='modal'>
