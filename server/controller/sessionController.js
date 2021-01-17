@@ -15,7 +15,7 @@ exports.isLoggedIn = (req, res, next) => {
     return data ? (res.locals.verify = true, next()) : (res.locals.verify = false, next());
   })
   .catch(err => {
-    res.locals.verify = false
+    res.locals.verify = false;
     return next();
   });
 };
@@ -34,10 +34,7 @@ exports.startSession = (req, res, next) => {
   })
   .catch(err => {
     console.log(err)
-    // const errObj = {
-    //   message: `Error sessionController.startSession: ${err}`,
-    //   log: 'Error in sessionController.startSession: check error log'
-    // };
+ 
     return next();
   })
 };

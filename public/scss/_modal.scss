@@ -57,9 +57,9 @@
     height: 25px;
     width: 25px;
     transform: skew(0);
-    border-radius: 50%;
-
-    font-family: 'Lato', sans-serif;
+    // border-radius: 50%;
+    font-weight: bold;
+    padding-bottom: 24px;
 
     &:active{
         background-color: $orange-pantone;

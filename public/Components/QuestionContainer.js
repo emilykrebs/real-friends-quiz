@@ -75,7 +75,10 @@ class QuestionContainer extends Component{
             <div>
                 <div className='header'>Congratulations!</div>
                 <form>
-                    <input type='text' placeholder='roomkeyhere###' value={this.state.room} />
+                    <div id='copyroom'>
+                        <input type='text' placeholder='roomkeyhere###' value={this.state.room} />
+                        <button onClick={(event) => {event.preventDefault();; navigator.clipboard.writeText(this.state.room)}} >Copy</button>
+                    </div>
                 </form>
             </div>
         );
