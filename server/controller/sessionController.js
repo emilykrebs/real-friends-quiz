@@ -12,7 +12,7 @@ exports.isLoggedIn = (req, res, next) => {
     console.log('COOKIE FOUND----->', data);
     // check if null is returned -> if so, redirect to login
     // otherwise, next;
-    return data ? (res.locals.verify = true, next()) : (res.locals.verify = false, next());
+    return data ? (res.locals.verify = data.cookieId, next()) : (res.locals.verify = false, next());
   })
   .catch(err => {
     res.locals.verify = false;
@@ -25,7 +25,6 @@ exports.isLoggedIn = (req, res, next) => {
 */
 exports.startSession = (req, res, next) => {
   const { userId } = res.locals;
-  console.log('USERID', userId.toString());
 
   Session.create({ cookieId: userId.toString() })
   .then(data => {
@@ -34,7 +33,6 @@ exports.startSession = (req, res, next) => {
   })
   .catch(err => {
     console.log(err)
- 
     return next();
   })
 };

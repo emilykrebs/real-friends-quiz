@@ -6,7 +6,7 @@ const UserContainer = (props) => {
         const users = [];
 
         for (let i = 0; i < props.users.length; i++){
-            users.push(<User username={props.users[i].id} id={props.users[i].id} key={`user#${i}`} />)
+            users.push(<User username={props.users[i].name} id={props.users[i].id} score={props.users[i].score} key={`user#${i}`} />)
         }
         
         return(

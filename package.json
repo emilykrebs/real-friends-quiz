@@ -6,7 +6,7 @@
   "scripts": {
     "start": "SET NODE_ENV=production node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mac": "SET NODE_ENV=development nodemon server/server.js & webpack serve --open",
+    "mac": "NODE_ENV=development nodemon server/server.js & webpack serve --open",
     "windows": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"nodemon server/server.js\"",
     "build-windows": "cross-env NODE_ENV=production webpack",
     "build-mac": "NODE_ENV=production webpack"
@@ -26,6 +26,7 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "mongoose": "^5.11.12",
+    "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

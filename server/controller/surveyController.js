@@ -1,11 +1,11 @@
 const Survey = require('../models/surveyModel');
 
+// creates a new survey in database --->
 exports.createNewSurvey = (req, res, next) => {
   const newSurvey = req.body;
 
   Survey.create({ questions: newSurvey })
   .then(data => {
-    console.log('SURVEY CREATE DATA----->',data)
     res.locals.roomId = data._id;
     next();
   })
@@ -18,6 +18,7 @@ exports.createNewSurvey = (req, res, next) => {
   });
 };
 
+// retrieves survey information from database given the survey id --->
 exports.getSurveyID = (req, res, next) => {
   const findSurveyID = req.params.id;
   

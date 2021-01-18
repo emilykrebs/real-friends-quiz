@@ -5,16 +5,22 @@ const userController = require('../controller/userController');
 const cookieController = require('../controller/cookieController');
 const sessionController = require('../controller/sessionController');
 
-// sign up
+// route post event for when a user signs up/registers --->
 router.post('/register', userController.postLogin, (req, res) => {
-    res.status(200).send('REGISTER WORKED');
+    res.status(200).json(res.locals.userId);
 })
 
+// routes get request to verify that the current user is looged in --> 
 router.get('/verify', sessionController.isLoggedIn, (req, res) => {
   res.status(200).json(res.locals.verify);
 })
 
-// login
+// routes get request to retrieves the corresponding username based on user id --->
+router.get('/:id', userController.getUser, (req, res) => {
+  res.status(200).json(res.locals.username);
+})
+
+// routes a post request to log a user in  --->
 router.post('/login', 
   userController.verifyUser,
   sessionController.startSession,  

@@ -1,6 +1,11 @@
-import React from 'react';
+import React , { useEffect } from 'react';
 
 const Menu = (props) => {
+
+    useEffect(() => {
+        document.getElementById('root').style.width = '50%';
+        document.getElementById('root').style.backgroundColor = 'white';
+    })
     
     return(
         <div id='menubuttoncontainer'>
