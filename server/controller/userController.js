@@ -1,12 +1,13 @@
 const User = require('../models/userModel');
 
+// create a new User in db during sign-up/register --->
 exports.postLogin = (req, res, next) => {
-    const newUser = req.body;
-    // console.log('NEW USER CREATED' , newUser)
+  const newUser = req.body;
 
   User.create(newUser)
   .then(data => {
     console.log('USER CREATED----->', data)
+    res.locals.userId = data._id;
     next();
   })
   .catch(err => {
@@ -19,8 +20,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 
-//verify user
-
+// verify user's login credentials --->
 exports.verifyUser =(req, res, next)=>{
   const userLogin = req.body;
   User.findOne(userLogin)
@@ -38,3 +38,19 @@ exports.verifyUser =(req, res, next)=>{
     next(errorObj);
   });
 };
+
+// retrieves username for a specific user given the userId --->
+exports.getUser = (req, res, next) => {
+  User.findOne({_id: req.params.id})
+    .then(data => {
+      res.locals.username = data.username;
+      return next();
+    })
+    .catch(err => {
+      const errorObj = {
+        message: `Error in user.getUser: error getting user from DB: ${err}`,
+        log: 'Error in userController.getUser. Check error error logs'
+      };
+      return next(errorObj);
+    })
+}

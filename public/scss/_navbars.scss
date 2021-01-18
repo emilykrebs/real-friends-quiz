@@ -14,6 +14,33 @@
         line-height: 0;
         margin: 0;
     }
+
+    #navlogin{
+        position: fixed;
+        top: 0;
+        right: 0;
+        line-height: 0;
+
+        button{
+            transition: all 0s;
+            box-shadow: none !important;
+            transform: skew(0) !important;
+            background-color: #02c39a;
+            &:active{
+                background-color: #028090;
+            }
+        }
+    }
+
+    .text{
+        background-color: transparent !important;
+        h5{
+            transition: all 0s;
+            &:active{
+                color: $ash !important;
+            }
+        }
+    }
 }
 
 #bottombar {

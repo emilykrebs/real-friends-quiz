@@ -16,7 +16,7 @@
     margin: 0;
     background-color: $light-grey;
     width: 100%;
-    padding: 32px;
+    padding: 16px 32px;
     border-bottom: 4px solid $ash;
     text-align: center;
     box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.15);
@@ -58,4 +58,42 @@
     bottom: 0;
     right: 0;
     background-color: $winter-sky;
+}
+
+.gamequestion{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 64px;
+    top: 50%;
+    left: 50%;
+    background-color: $light-grey;
+}
+
+.gameButton{
+    margin: 0px 8px;
+    padding: 8px 32px;
+}
+
+#clock{
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 32px;
+    padding: 32px;
+    border-radius: 50%;
+    font-size: 96px;
+    color: black;
+    background: white;
+    z-index: 50;
+}
+
+#startbtn{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: auto;
 }

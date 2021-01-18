@@ -17,14 +17,13 @@ app.use(cookieParser());
 mongoose.connect( MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once("open", () => console.log("connected to database"));
 
+// statically serve build + index.html files if in production mode --->
 if (process.env.NODE_ENV === 'production') {
-  // statically serve everything in the build folder on the route '/build'
   app.use('/build', express.static(path.join(__dirname, '../build')));
-  // serve index.html on the route '/'
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
-}
+};
 
 // route requests to /survey endpoint to survey router --->
 app.use('/survey', surveyRouter);
@@ -51,6 +50,7 @@ app.use((err, req, res, next) => {
 
 /* .............................. SOCKET.IO ..............................  */
 
+// establish socket.io connection w/ server --->
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
@@ -60,29 +60,83 @@ http.listen(PORT || 3000, ()=>{
 
 const Player = require('./Player.js');
 const Room = require('./Room.js');
+const Survey = require('./models/surveyModel');
 
+// initialize room array to store active instances of game rooms --->
 const rooms = [];
 
+// initial event listener for when socket.io connection is established 
+//   all subsequent socket event listeners will be 'listening' for relevant once connection is made
 io.on('connection', (socket) => {
 
+  socket.on('checkoccupancy', data => {
+    const room = rooms.filter(currRoom => currRoom.key === data.room)[0];
+    if(!room)
+      return;
+    if (room.users.length >= 5){
+      io.to(data.id).emit('roomfull', true);
+    }
+  });
+
+// event listener for 'joinroom', emitted when a player enters the room 
+//    (event initialized/emitted in Game.js component) --->
   socket.on('joinroom', data => {
 
+    // initialize a new instance of player before a player enters the specified game room --->
     const newPlayer = new Player(data.name, socket.id);
     let target = {
       users: []
     };
 
+    // check if the room entered already exists in active rooms array, if so, add the player as a user
+    //   otherwise, query the db for the specific survey info,
+    //   then initialize a new instance of room and add the player as a user, storing survey info, and roomId
+    // emit 'joinedroom' event
     if (rooms.some(room => room.key === data.room)){
       target = rooms.filter(room => room.key === data.room)[0];
       target.users.push(newPlayer);
+      sendRoomData(data.room, target.users, target.survey);
     } else {
-      target = new Room(data.room, [newPlayer]);
-      rooms.push(target);
+      Survey.findOne({_id: data.room})
+        .then(result => {
+          target = new Room(data.room, result, [newPlayer]);
+          rooms.push(target);
+          sendRoomData(data.room, target.users, target.survey);
+        })
+        .catch(err => console.log(`Could not create room: ${err}`));
     }
-
-    socket.join(data.room);
-
-    io.sockets.to(data.room).emit('joinedroom', target.users);
   });
+
+  // on 'ready' listener => find the room instance in existing rooms array
+  //  increment the # of users who answered ready by 1, 
+  //  check if # of users who answered question === # of users in the room, reset room
+  //  emit 'startgame' event
+  socket.on('ready', data => {
+    const room = rooms.filter(currRoom => currRoom.key === data.room)[0];
+    if (room.answeredQuestion() === room.users.length) {
+      room.reset();
+      io.sockets.to(data.room).emit('startgame');
+    }
+  });
+
+  // on 'submitanswer' listener => find the room instance in existing rooms array
+  // find the specific player within the room; if answer to survey question is correct, increment score
+  // Check if everyone in the room has answered this specific question => if so, emit 'nextquesiton' event
+  socket.on('submitanswer', data => {
+    const room = rooms.filter(currRoom => currRoom.key === data.room)[0];
+    const player = room.users.filter(currUser => currUser.id === data.id)[0];
+    if (data.isCorrect) player.addScore();
+    //else player.decreaseScore();
+    if (room.answeredQuestion() === room.users.length) {
+      room.reset();
+      io.sockets.to(data.room).emit('nextquestion', room.users);
+    }
+  });
+
+  // helper function to emit current room data back to front end -->
+  function sendRoomData(room, users, survey){
+    socket.join(room);
+    io.sockets.to(room).emit('joinedroom', {users, survey});
+  }
 
 });
