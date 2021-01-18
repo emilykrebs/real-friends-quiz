@@ -1,8 +1,7 @@
 const User = require('../models/userModel');
 
 exports.postLogin = (req, res, next) => {
-    const newUser = req.body;
-    // console.log('NEW USER CREATED' , newUser)
+  const newUser = req.body;
 
   User.create(newUser)
   .then(data => {
@@ -19,8 +18,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 
-//verify user
-
+// verify user login credentials by comparing w/ database --->
 exports.verifyUser =(req, res, next)=>{
   const userLogin = req.body;
   User.findOne(userLogin)

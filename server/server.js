@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
-}
+};
 
 // route requests to /survey endpoint to survey router --->
 app.use('/survey', surveyRouter);

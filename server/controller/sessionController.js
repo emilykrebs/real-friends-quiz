@@ -7,11 +7,9 @@ const Session = require('../models/sessionModel');
 exports.isLoggedIn = (req, res, next) => {
   const { ssid } = req.cookies;
 
-  Session.findOne({cookieId: ssid})
+  Session.findOne({ cookieId: ssid })
    .then(data => {
     console.log('COOKIE FOUND----->', data);
-    // check if null is returned -> if so, redirect to login
-    // otherwise, next;
     return data ? (res.locals.verify = true, next()) : (res.locals.verify = false, next());
   })
   .catch(err => {
@@ -34,8 +32,7 @@ exports.startSession = (req, res, next) => {
   })
   .catch(err => {
     console.log(err)
- 
     return next();
-  })
+  });
 };
 
