@@ -115,7 +115,7 @@ class Game extends Component {
             <div className='modal' style={{top: '25%', left: '50%'}} >
                 <div className='header'>Results</div>
                 <form>
-                    <h4>Congrats go home</h4>
+                    <h4>Congrats, go home!</h4>
                     <button onClick={this.props.exitGame} >Exit</button>
                 </form>
             </div>) : <div></div>;
