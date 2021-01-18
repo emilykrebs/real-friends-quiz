@@ -18,8 +18,7 @@ class Game extends Component {
 
         socket = io.connect();
         socket.on('roomfull', data => {
-            if (data)
-                this.props.exitGame();
+            this.props.exitGame();
         })
         socket.on('joinedroom', data => {
             this.setState({...this.state, users: data.users, survey: data.survey.questions, questionNum: 0, answered: false});
@@ -33,7 +32,7 @@ class Game extends Component {
             this.nextQuestion(data);
         });
         
-        this.state={socket, users: [], showUsers: true, counter: 30, started: false};
+        this.state={socket, users: [], showUsers: true, counter: 30, started: false, gameOver: false};
     }
 
     collapseUsers(){
@@ -58,6 +57,12 @@ class Game extends Component {
     }
 
     nextQuestion(data){
+
+        if (this.state.questionNum === 4){
+            this.setState({...this.state, started: false, gameOver: true});
+            return;
+        }
+
         const newQuestionNum = this.state.questionNum + 1;
         this.setState({...this.state, users: data, questionNum: newQuestionNum, answered: false, counter: 30});
     }
@@ -74,18 +79,13 @@ class Game extends Component {
         if(!this.props.room)
             this.props.exitGame();
 
-        const roomCheck = {
-            id: socket.id,
-            room: this.props.room,
-        }
-        
-        socket.emit('checkoccupancy', roomCheck);
-
         const root = document.getElementById('root');
         root.style.width = '100%';
         root.style.backgroundColor = 'black';
 
         this.setState({socket});
+        
+        socket.emit('checkoccupancy', this.props.room);  // should we return here? will componenetDidMount keep running after this emit? 
 
         const data = {
             room: this.props.room,
@@ -98,16 +98,27 @@ class Game extends Component {
     render(){
 
         const users = this.state.showUsers ? <UserContainer users={this.state.users} room={this.props.room} /> : <div></div>;
-        const nextquestion = this.state.survey && this.state.started ? (
-            <div>
-                <RoomSurvey question={this.state.survey[this.state.questionNum].question} answered={this.state.answered} clickEvent={this.emitAnswer} />
-            </div>) : <div></div>;
-        const startbutton = this.state.started ? <div></div> : (
+
+        const timer = !this.state.gameOver ? <Timer time={this.state.counter} /> : <div></div>;
+
+        const startbutton = this.state.started || this.state.gameOver ? <div></div> : (
             <div id='startbtn'>
                 <button onClick={this.startGame}>Start Game</button>
             </div>);
 
-        const results = 'hi';
+        const nextquestion = this.state.survey && this.state.started && !this.state.gameOver ? (
+            <div>
+                <RoomSurvey question={this.state.survey[this.state.questionNum].question} answered={this.state.answered} clickEvent={this.emitAnswer} />
+            </div>) : <div></div>;
+
+        const results = this.state.gameOver ? (
+            <div className='modal' style={{top: '25%', left: '50%'}} >
+                <div className='header'>Results</div>
+                <form>
+                    <h4>Congrats, go home!</h4>
+                    <button onClick={this.props.exitGame} >Exit</button>
+                </form>
+            </div>) : <div></div>;
 
         return(
             <div>
@@ -116,7 +127,8 @@ class Game extends Component {
                 {users}
                 {nextquestion}
                 {startbutton}
-                <Timer time={this.state.counter} />
+                {results}
+                {timer}
             </div>
         )
     }

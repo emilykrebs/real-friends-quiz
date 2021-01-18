@@ -31,6 +31,8 @@ class App extends Component {
     this.enterRoomCode = this.enterRoomCode.bind(this);
     this.exitGame = this.exitGame.bind(this);
 
+    this.callReset = this.callReset.bind(this);
+
     this.question = React.createRef();
     this.login = React.createRef();
     
@@ -73,7 +75,7 @@ class App extends Component {
 
   // event handler for when the user exits the create survey popup 
   exitSurvey(){
-    this.setState({ ...state, create: false, enterRoom: false, questions: []});
+    this.setState({...this.state, create: false, enterRoom: false, questions: []});
   }
   // sets this.state.enterRoom to true which causes the enter room code popup to display
   openRoomPrompt(){
@@ -103,6 +105,10 @@ class App extends Component {
   // sets this.state.redirectGame to false so the <Redirect /> componenet unmounts and the user is sent back to the home page
   exitGame(){
     this.setState({...this.state, redirectHome: true, redirectGame: false})
+  }
+
+  callReset(){
+    this.login.current.resetLogin();
   }
 
   render() {
@@ -140,7 +146,7 @@ class App extends Component {
     
     return (
       <div id='app'>
-        <Navbar username={this.state.username} login={this.getUsername} /><div id='bottombar' />
+        <Navbar username={this.state.username} login={this.callReset} /><div id='bottombar' />
         <Switch>
           <Route exact path='/'>{home}</Route>
           <Route exact path='/game'>{game}</Route>
