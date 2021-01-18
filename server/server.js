@@ -31,7 +31,7 @@ app.use('/survey', surveyRouter);
 // route requests to /user endpoint to user router --->
 app.use('/user', userRouter);
 
-// general 404 handler for any other endpoints --->
+// general 404 handler for any other endpoints / serve homepage --->
 app.use('*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
@@ -69,12 +69,14 @@ const rooms = [];
 //   all subsequent socket event listeners will be 'listening' for relevant once connection is made
 io.on('connection', (socket) => {
 
+  // event listener for 'checkoccupancy' => finds specified game room in existing rooms array
+  //  if no room exists, return; if room exists, check current occupancy & emit 'roomfull' if room is over limit 
   socket.on('checkoccupancy', data => {
-    const room = rooms.filter(currRoom => currRoom.key === data.room)[0];
+    const room = rooms.filter(currRoom => currRoom.key === data)[0];
     if(!room)
       return;
-    if (room.users.length >= 5){
-      io.to(data.id).emit('roomfull', true);
+    if (room.users.length >= 4){
+      io.to(socket.id).emit('roomfull', true);
     }
   });
 

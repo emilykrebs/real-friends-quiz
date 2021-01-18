@@ -9,7 +9,7 @@ const Navbar = (props) => {
                 Currently logged in as {props.username}
             </h5>
             <div id='navlogin'>
-                <button><h5>Sign up</h5></button>
+                <button onClick={props.login}><h5>Sign up</h5></button>
                 <button className='text' onClick={props.login} ><h5>Log in</h5></button>
             </div>
         </div>

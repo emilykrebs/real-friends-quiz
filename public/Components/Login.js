@@ -7,9 +7,12 @@ class Login extends Component {
         this.submitSignup = this.submitSignup.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
         this.toggleSignup = this.toggleSignup.bind(this);
+        
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
         this.getUserID = this.getUserID.bind(this);
+        this.resetLogin = this.resetLogin.bind(this);
         
         this.state={
             username: '',
@@ -72,6 +75,10 @@ class Login extends Component {
 
     getUserID(){
         return this.state.userID;
+    }
+
+    resetLogin(){
+        this.setState({...this.state, loggedIn: false});
     }
 
     componentDidMount(){
