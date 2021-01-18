@@ -1,0 +1,61 @@
+#usercontainer{
+    position: fixed;
+    float: left;
+    height: 100%;
+    width: 15%;
+    padding: 32px;
+    border-right: 8px solid $ash;
+    background-color: $dark-grey;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: inset -5px 0 25px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user{
+    margin: 0;
+    background-color: $light-grey;
+    width: 100%;
+    padding: 32px;
+    border-bottom: 4px solid $ash;
+    text-align: center;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gameheader{
+    background-color: $winter-sky;
+    top: 0;
+    width: 100%;
+    padding: 0px 32px;
+    padding-top: 16px;
+    margin-bottom: 0;
+    line-height: 24px;
+    border-bottom: 4px solid $orange-pantone;
+    text-align: center;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+
+    sup{
+        font-size: 12px;
+        margin: 0;
+        line-height: 0;
+        padding: 0;
+        height: 0;
+        text-align: center;
+    }
+}
+
+#collapsebtn{
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    margin-left: 18%;
+}
+
+#leavegamebtn{
+    position: fixed;
+    z-index: 50;
+    bottom: 0;
+    right: 0;
+    background-color: $winter-sky;
+}

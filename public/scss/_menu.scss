@@ -6,6 +6,10 @@
 
     button{
         margin: 8px 32px;
+
+        &:disabled{
+            background-color: currentColor;
+        }
     }
 }
 

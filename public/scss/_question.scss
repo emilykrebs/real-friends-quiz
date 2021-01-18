@@ -18,3 +18,31 @@
     margin: 16px;
     color: $dark-grey;
 }
+
+#copyroom{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    input {
+        margin: 16px;
+        overflow: hidden;
+    }
+
+    button{
+        transform: skew(0) rotate(0deg) scale(1);
+        box-shadow: none;
+
+        &:hover{
+            transform: skew(0) rotate(0deg) scale(1);
+            box-shadow: none;
+        }
+
+        &:active{
+            transform: skew(0) rotate(0deg) scale(1);
+            box-shadow: none;
+        }
+    }
+}
