@@ -7,8 +7,12 @@ class Login extends Component {
         this.submitSignup = this.submitSignup.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
         this.toggleSignup = this.toggleSignup.bind(this);
+        
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+        this.getUserID = this.getUserID.bind(this);
+        this.resetLogin = this.resetLogin.bind(this);
         
         this.state={
             username: '',
@@ -36,7 +40,15 @@ class Login extends Component {
         
         const body = {username: this.state.username, password: this.state.password};
         fetch(`/user/register`, { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
-            .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
+            .then(res => {
+                if (res.status === 200)
+                    this.setState({...this.state, loggedIn: true})
+                return res.json();
+            })
+            .then(data => {
+                this.setState({...this.state, userID: data});
+                this.props.updateUsername();
+            })
             .catch(err => console.log(`Error signing up: ${err}`));
 
         document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
@@ -47,22 +59,43 @@ class Login extends Component {
 
         const body = {username: this.state.username, password: this.state.password};
         fetch('/user/login', { method: 'POST', headers: { 'Content-Type': 'Application/JSON' }, body: JSON.stringify(body) })
-            .then(res => {if (res.status === 200) this.setState({...this.state, loggedIn: true})})
+            .then(res => {
+                if (res.status === 200)
+                    this.setState({...this.state, loggedIn: true})
+                    return res.json();
+                })
+            .then(data=>{
+                this.setState({...this.state, userID: data});
+                this.props.updateUsername();
+            })
             .catch(err => console.log(`Error logging in: ${err}`));   
 
         document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
     }
 
+    getUserID(){
+        return this.state.userID;
+    }
+
+    resetLogin(){
+        this.setState({...this.state, loggedIn: false});
+    }
+
     componentDidMount(){
-        document.getElementById('root').style.width = '50%';
-        document.getElementById('root').style.backgroundColor = 'white';
-        document.getElementById('splash').style.filter = `brightness(${'75%'}) blur(2px)`;
         fetch('/user/verify')
             .then(response=>response.json())
             .then(data=>{
-                this.setState({...this.state, loggedIn: data})
-                if (data)
+                if (!data){
+                    document.getElementById('splash').style.filter = `brightness(${'75%'}) blur(2px)`;
+                    console.log(data);
+                    this.setState({...this.state, loggedIn: data})
+                }
+                else{
                     document.getElementById('splash').style.filter = `brightness(${'100%'}) blur(0px)`
+                    console.log(data);
+                    this.setState({...this.state, userID: data, loggedIn: true})
+                    this.props.updateUsername();
+                }
             });
     }
 
